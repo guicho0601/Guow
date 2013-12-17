@@ -12,7 +12,28 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    if (![defaults boolForKey:@"ValoresGuardados"])
+    {
+        NSArray* languages = [defaults objectForKey:@"AppleLanguages"];
+        NSString* preferredLang = [languages objectAtIndex:0];
+        int o=2;
+        if ([preferredLang isEqualToString:@"es"]) {
+            o=1;
+        }
+        NSDictionary *defaultValues = [NSDictionary dictionaryWithObjectsAndKeys:
+                                       [NSNumber numberWithInt:o],@"idioma",
+                                       [NSNumber numberWithBool:NO],@"aceptado",
+                                       [NSNumber numberWithBool:YES], @"descargas",
+                                       //[NSNumber numberWithBool:YES], @"kMostrarMensaje",
+                                       //@"ThXou", @"kMiNombre",
+                                       //nil, @"kUltimaVisita",
+                                       [NSNumber numberWithBool:YES], @"kValoresGuardados",
+                                       nil];
+        
+        [defaults registerDefaults:defaultValues];
+    }
     return YES;
 }
 							
