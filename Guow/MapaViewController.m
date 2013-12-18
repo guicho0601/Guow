@@ -17,15 +17,15 @@
     LugarList *listLugar;
     ModelConnection *model;
     ServicioList *listServicio;
-    NSMutableArray *locacionesArray;
     Lugar *lugares;
     int menuTouch;
     NSString *idBusqueda;
     float ultx, ulty;
+    NSString *idLugar;
 }
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
-@property (weak, nonatomic) IBOutlet UINavigationItem *titleBar;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *configButton;
 
 
 @end
@@ -33,9 +33,6 @@
 @implementation MapaViewController
 
 -(void)cargarDatos{
-    if (locacionesArray != nil) [locacionesArray removeAllObjects];
-    else locacionesArray = [[NSMutableArray alloc]init];
-    
     [self limpiarimagen];
 
     model = [[ModelConnection alloc]init];
@@ -87,8 +84,12 @@
 
 -(void)ubicarbotones:(NSString*)titulo imagen:(NSString*)imgName horizontal:(float)x vertical:(float)y{
     //x = y = 1500;
-    UIImage *imagen = [UIImage imageNamed:@"menu_close.png"];
-    UIButton *btnDetail = [UIButton buttonWithType:UIButtonTypeSystem];
+    UIImage *imagen;
+    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+    if ([def boolForKey:@"isTurismo"]) {
+        imagen = [UIImage imageNamed:[def stringForKey:@"logoTurismo"]];
+    }
+    UIButton *btnDetail = [UIButton buttonWithType:UIButtonTypeCustom];
     btnDetail.frame = CGRectMake(x,y,imagen.size.width,imagen.size.height);
     [btnDetail addTarget:self action:@selector(abririnfo:) forControlEvents:UIControlEventTouchUpInside];
     [btnDetail setTitle:titulo forState:UIControlStateNormal];
@@ -101,7 +102,14 @@
 }
 
 -(void)abririnfo:(UIButton *)sender{
-    NSLog(@"Button Action %@",sender.titleLabel.text);
+    idLugar = sender.titleLabel.text;
+    self.configButton.enabled = NO;
+    [_actionDelagate lugarSeleccionado:idLugar];
+    [_actionDelagate movePanelRight];
+}
+
+-(NSString*)idInfolugar{
+    return idLugar;
 }
 
 -(void)limpiarimagen{
@@ -148,8 +156,14 @@
     self.scrollView.decelerationRate = UIScrollViewDecelerationRateFast;
     UITapGestureRecognizer *tapgesture=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(posiciontoque:)];
     tapgesture.numberOfTapsRequired = 1;
+    menuTouch = 2;
+    idBusqueda = @"1";
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+}
 
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
@@ -160,7 +174,7 @@
         [_actionDelagate movePanelLeft];
         [_actionDelagate movePanelToOriginalPosition];
     }
-    
+    [self cargarDatos];
     //[self centerScrollViewContents];
 }
 
@@ -214,6 +228,7 @@
         default:
             break;
     }
+    [defaults setObject:[NSArray arrayWithObjects:@"Hola", nil] forKey:@"favoritos"];
     [defaults synchronize];
     [listServicio cambioIdioma];
     if (listCategoria != nil) [listCategoria cambioIdioma];
@@ -263,6 +278,11 @@
     menuTouch = 4;
     idBusqueda = idPlace;
     [self cargarDatos];
+    [_actionDelagate movePanelToOriginalPosition];
+}
+
+-(void)cerrarInfoPanel{
+    self.configButton.enabled = YES;
     [_actionDelagate movePanelToOriginalPosition];
 }
 

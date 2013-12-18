@@ -10,6 +10,8 @@
 #import "ModelConnection.h"
 #import "MapaViewController.h"
 #import "ServicioList.h"
+#import "infoLugarView.h"
+#import "Descargar_imagenes.h"
 #import <QuartzCore/QuartzCore.h>
 #define CENTER_TAG 1
 #define LEFT_PANEL_TAG 2
@@ -25,7 +27,9 @@
 @property (nonatomic, strong) MapaViewController *centerView;
 @property (nonatomic, strong) UINavigationController *navigator;
 @property (nonatomic, strong) ServicioList *menuView;
+@property (nonatomic, strong) infoLugarView *rightPanelViewController;
 @property (nonatomic, assign) BOOL showingLeftPanel;
+@property (nonatomic, assign) BOOL showingRightPanel;
 
 @end
 
@@ -77,10 +81,13 @@
 - (void)resetMainView
 {
     if (_navigator != nil) {
-        //[self.navigator.view removeFromSuperview];
-        //self.navigator = nil;
         _centerView.MenuButton.tag = 0;
         _centerView.MenuButton.image = [UIImage imageNamed:@"glyphicons_158_show_lines.png"];
+        self.showingLeftPanel = NO;
+    }
+    if (_rightPanelViewController != nil) {
+        [self.rightPanelViewController.view removeFromSuperview];
+        self.rightPanelViewController = nil;
         self.showingLeftPanel = NO;
     }
     
@@ -112,6 +119,29 @@
     return view;
 }
 
+- (UIView *)getRightView
+{
+    if (_rightPanelViewController == nil) {
+        self.rightPanelViewController = [[infoLugarView alloc]initWithNibName:@"infoLugarView" bundle:nil];
+        self.rightPanelViewController.view.tag =RIGHT_PANEL_TAG;
+        [self.rightPanelViewController reciveMapView:self.centerView];
+        
+        [self.view addSubview:self.rightPanelViewController.view];
+        [self addChildViewController:self.rightPanelViewController];
+        [self.view bringSubviewToFront:self.rightPanelViewController.view];
+        [_rightPanelViewController didMoveToParentViewController:self];
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+            _rightPanelViewController.view.frame = CGRectMake(self.view.frame.size.height-320, 0, 320, self.view.frame.size.width);
+        }else{
+            _rightPanelViewController.view.frame = CGRectMake(0,0, self.view.frame.size.width, self.view.frame.size.height);
+        }
+    }
+    self.showingRightPanel = YES;
+    [self showCenterViewWithShadow:YES withOffset:2];
+    UIView *view = self.rightPanelViewController.view;
+    return view;
+}
+
 -(void)movePanelLeft{
     UIView *childView = [self getLeftView];
     [self.view sendSubviewToBack:childView];
@@ -122,6 +152,28 @@
         if (finished) {
             _centerView.MenuButton.tag = 1;
             _centerView.MenuButton.image = [UIImage imageNamed:@"glyphicons_157_show_thumbnails_with_lines.png"];
+        }
+    }];
+}
+
+- (void)movePanelRight // to show left panel
+{
+    UIView *childView = [self getRightView];
+    [self.view sendSubviewToBack:childView];
+    [self.view sendSubviewToBack:[self getLeftView]];
+    
+    int tam;
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        tam = -self.view.frame.size.width + PANEL_WIDTH;
+    }else{
+        tam = -self.view.frame.size.width + self.view.frame.size.height - 260;
+    }
+    
+    [UIView animateWithDuration:SLIDE_TIMING delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+        _centerView.view.frame = CGRectMake(tam, 0, self.view.frame.size.width, self.view.frame.size.height);
+    } completion:^(BOOL finished){
+        if (finished) {
+            //_centerViewController.rightButton.tag = 0;
         }
     }];
 }
@@ -139,6 +191,10 @@
     }];
 }
 
+-(void)lugarSeleccionado:(NSString *)idLugar{
+    [self.rightPanelViewController cambiarLugar:idLugar];
+}
+
 - (void)seleccionarIdioma:(id)sender{
     NSLog(@"Seleccionando");
 }
@@ -151,9 +207,12 @@
         [model descargarInfo:@"select * from servicio" Archivo:@"servicio"];
         [model descargarInfo:@"select * from categoria" Archivo:@"categoria"];
         [model descargarInfo:@"select * from lugar" Archivo:@"lugar"];
+        [model descargarInfo:@"select * from img_turismo" Archivo:@"imagenes"];
         NSLog(@"Terminando Descarga...");
     }
     model = nil;
+    Descargar_imagenes *descarga = [[Descargar_imagenes alloc]init];
+    [descarga iniciar_descarga];
 }
 
 

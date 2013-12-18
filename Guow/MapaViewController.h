@@ -13,6 +13,8 @@
 
 @optional
 -(void)movePanelLeft;
+-(void)movePanelRight;
+-(void)lugarSeleccionado:(NSString*)idLugar;
 
 @required
 -(void)movePanelToOriginalPosition;
@@ -24,4 +26,6 @@
 @property (nonatomic, assign) id<MapaActionsDelegate> actionDelagate;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *MenuButton;
 -(void)sendServicio:(ServicioList*)list;
+-(void)cerrarInfoPanel;
+-(NSString*)idInfolugar;
 @end

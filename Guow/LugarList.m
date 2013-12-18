@@ -114,6 +114,12 @@
     
     Lugar *aux = [lugarArray objectAtIndex:indexPath.row];
     cell.textLabel.text = aux.nombre;
+    if (indexPath.row > 0) {
+        NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+        if ([def boolForKey:@"isTurismo"]) {
+            cell.imageView.image = [UIImage imageNamed:aux.logo];
+        }
+    }
     return cell;
 }
 

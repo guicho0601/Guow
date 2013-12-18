@@ -10,6 +10,7 @@
 #define Pagina @"http://www.guowmaps.com/paginasguowapp/model.php?query="
 #import <SystemConfiguration/SystemConfiguration.h>
 #import "Reachability.h"
+#import "Descargar_imagenes.h"
 
 @implementation ModelConnection
 
@@ -96,6 +97,34 @@
         NSLog(@"No hay conexion");
     }
     return NO;
+}
+
+-(UIImage*)buscarImagen:(NSString*)nombre{
+    NSString *path = [self getPathImagenes:nombre];
+    UIImage *image = [[UIImage alloc] initWithData:[NSData dataWithContentsOfFile:path]];
+    return image;
+}
+
+-(NSString*)getPathImagenes:(NSString*)nombre{
+    NSString *s = nombre;
+    NSURL *url = [NSURL URLWithString:s];
+    NSString *nombrearchivo = url.lastPathComponent;
+    
+    NSArray *array = [s  componentsSeparatedByString:@"/"];
+    
+    NSString *docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    
+    NSString *carpeta = [docDir stringByAppendingFormat:@"/%@",[array objectAtIndex:(array.count -2)]];
+    
+    NSString *fotointerna = [NSString stringWithFormat:@"%@/%@",carpeta,nombrearchivo];
+    NSFileManager *fm = [NSFileManager defaultManager];
+    if (![fm fileExistsAtPath:fotointerna]){
+        Descargar_imagenes *descarga = [[Descargar_imagenes alloc]init];
+        [descarga descargarImagen:fotointerna];
+        descarga = nil;
+    }
+    
+    return fotointerna;
 }
 
 

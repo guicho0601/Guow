@@ -14,5 +14,6 @@
 -(NSMutableArray*)consulta:(NSString*)file;
 -(BOOL)comprobarActualizaciones;
 -(int)comprobarIdioma;
+-(UIImage*)buscarImagen:(NSString*)nombre;
 
 @end

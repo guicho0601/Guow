@@ -80,6 +80,7 @@
 -(void)viewWillAppear:(BOOL)animated{
     [self cargarDatos];
     [self establecerTitulo];
+    //[self.tableView setBackgroundColor:[UIColor blackColor]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -111,7 +112,7 @@
     Servicio *aux = [serviciosArray objectAtIndex:indexPath.row];
     if ([model comprobarIdioma]==1) cell.textLabel.text = aux.servicioesp;
     else cell.textLabel.text = aux.servicioing;
-    
+    if(aux.icono != nil) cell.imageView.image = [UIImage imageNamed:aux.icono];
     return cell;
 }
 

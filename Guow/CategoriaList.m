@@ -120,9 +120,8 @@
     Categoria *aux = [categoriaArray objectAtIndex:indexPath.row];
     if ([model comprobarIdioma]== 1) cell.textLabel.text = aux.categoriaesp;
     else cell.textLabel.text = aux.categoriaing;
-    
-    //cell.imageView.image = [UIImage imageNamed:@"glyphicons_158_show_lines.png"];
-    
+    if(aux.icono != nil) cell.imageView.image = [UIImage imageNamed:aux.icono];
+
     return cell;
 }
 
@@ -173,8 +172,16 @@
 {
     Categoria *aux = [categoriaArray objectAtIndex:indexPath.row];
     if (indexPath.row == 0) {
-        [_delegate allCategories:[NSString stringWithFormat:@"%d",aux.idservicio]];
+        [_delegate allCategories:servicio];
     }else{
+        NSUserDefaults *def = [ NSUserDefaults standardUserDefaults];
+        if ([servicio isEqualToString:@"1"]) {
+            [def setObject:[NSNumber numberWithBool:YES] forKey:@"isTurismo"];
+        }else{
+            [def setObject:[NSNumber numberWithBool:NO] forKey:@"isTurismo"];
+        }
+        [def synchronize];
+        
         LugarList *lugar = [[LugarList alloc]initWithStyle:UITableViewStyleGrouped];
         [lugar categoriaSeleccionada:[NSString stringWithFormat:@"%d",aux.idcategoria] esp:aux.categoriaesp ing:aux.categoriaing];
         [_delegate sendLugar:lugar];

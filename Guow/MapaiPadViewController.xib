@@ -7,6 +7,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MapaViewController">
             <connections>
                 <outlet property="MenuButton" destination="tSU-0y-SsH" id="wKQ-Cf-JoR"/>
+                <outlet property="configButton" destination="vze-En-R1q" id="nGc-ZH-Ugf"/>
                 <outlet property="imageView" destination="Vqj-0x-Uwm" id="Th7-WX-Fyd"/>
                 <outlet property="scrollView" destination="H1l-dd-3M6" id="hbt-Sa-grm"/>
                 <outlet property="view" destination="1" id="KEd-py-OTC"/>

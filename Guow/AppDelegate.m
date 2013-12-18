@@ -26,6 +26,7 @@
                                        [NSNumber numberWithInt:o],@"idioma",
                                        [NSNumber numberWithBool:NO],@"aceptado",
                                        [NSNumber numberWithBool:YES], @"descargas",
+                                       [NSNumber numberWithBool:NO],@"isTurismo",
                                        //[NSNumber numberWithBool:YES], @"kMostrarMensaje",
                                        //@"ThXou", @"kMiNombre",
                                        //nil, @"kUltimaVisita",
