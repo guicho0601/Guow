@@ -19,12 +19,14 @@
     NSMutableArray *listadoImagenes;
     float widthCell, heightCell;
     CGFloat scale;
+    UIColor *originalColor;
 }
 @property (weak, nonatomic) IBOutlet UILabel *nombreLugar;
 @property (weak, nonatomic) IBOutlet UITextView *descripcionLugar;
 @property (weak, nonatomic) IBOutlet UICollectionView *imageCollection;
 @property (weak, nonatomic) IBOutlet UIButton *webButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *configButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *bookmarkButton;
 
 @end
 
@@ -58,6 +60,18 @@
         }
     }
     [self.imageCollection reloadData];
+    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+    NSMutableArray *favoritos = [def objectForKey:@"favoritos"];
+    for (NSString *linea in favoritos) {
+        if ([linea isEqualToString:idLugar]) {
+            self.bookmarkButton.tag=1;
+            self.bookmarkButton.tintColor = [UIColor redColor];
+            break;
+        }else{
+            self.bookmarkButton.tintColor = originalColor;
+            self.bookmarkButton.tag = 0;
+        }
+    }
 }
 
 -(void)cambiarIdioma{
@@ -85,6 +99,7 @@
     [self.imageCollection setDataSource:self];
     [self.imageCollection setDelegate:self];
     [self.imageCollection registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cellIdentifier"];
+    originalColor = self.bookmarkButton.tintColor;
 }
 
 - (void)didReceiveMemoryWarning
@@ -128,8 +143,6 @@
 
 -(void)reciveMapView:(MapaViewController *)map{
     viewMap = map;
-    //idLugar = [viewMap idInfolugar];
-    //[self cargarDatos];
     [self cambiarLugar:[viewMap idInfolugar]];
 }
 
@@ -206,4 +219,47 @@
     [self cambiarIdioma];
 }
 
+- (IBAction)buttonBookMarkAction:(id)sender {
+    UIBarButtonItem *button = sender;
+    NSString *mensaje,*titulo;
+    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+    NSMutableArray *favoritos = [[def objectForKey:@"favoritos"]mutableCopy];
+    if (!favoritos) {
+        favoritos =[[NSMutableArray alloc]init];
+    }
+    if (button.tag == 0) {
+        originalColor = button.tintColor;
+        button.tintColor = [UIColor redColor];
+        button.tag = 1;
+        [favoritos addObject:idLugar];
+        if ([model comprobarIdioma]==1) {
+            titulo = @"Favoritos";
+            mensaje = @"Lugar agregado a favoritos";
+        }else{
+            titulo = @"Bookmarks";
+            mensaje = @"Place added to bookmarks";
+        }
+    }else{
+        button.tintColor = originalColor;
+        button.tag = 0;
+        for (int i=0; i<favoritos.count; i++) {
+            NSString *linea = [favoritos objectAtIndex:i];
+            if ([idLugar isEqualToString:linea]) {
+                [favoritos removeObjectAtIndex:i];
+                break;
+            }
+        }
+        if ([model comprobarIdioma]==1) {
+            titulo = @"Favoritos";
+            mensaje = @"Lugar eliminado de favoritos";
+        }else{
+            titulo = @"Bookmarks";
+            mensaje = @"Place remove from bookmarks";
+        }
+    }
+    [def setObject:favoritos forKey:@"favoritos"];
+    [def synchronize];
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:titulo message:mensaje delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alert show];
+}
 @end

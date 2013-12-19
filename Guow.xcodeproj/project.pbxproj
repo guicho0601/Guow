@@ -19,6 +19,9 @@
 		C92503B01861499800A7123E /* Turismo.png in Resources */ = {isa = PBXBuildFile; fileRef = C92503A51861499800A7123E /* Turismo.png */; };
 		C92503B11861499800A7123E /* Volcanes_y_cerros.png in Resources */ = {isa = PBXBuildFile; fileRef = C92503A61861499800A7123E /* Volcanes_y_cerros.png */; };
 		C92503B41861561400A7123E /* Descargar_imagenes.m in Sources */ = {isa = PBXBuildFile; fileRef = C92503B31861561400A7123E /* Descargar_imagenes.m */; };
+		C9DF899318625613005531ED /* bookmark.png in Resources */ = {isa = PBXBuildFile; fileRef = C9DF899218625613005531ED /* bookmark.png */; };
+		C9DF89971862683D005531ED /* FavoritosList.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DF89951862683D005531ED /* FavoritosList.m */; };
+		C9DF89981862683D005531ED /* FavoritosList.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9DF89961862683D005531ED /* FavoritosList.xib */; };
 		C9E0094A185E8E76009A2368 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9E00949185E8E76009A2368 /* Foundation.framework */; };
 		C9E0094C185E8E76009A2368 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9E0094B185E8E76009A2368 /* CoreGraphics.framework */; };
 		C9E0094E185E8E76009A2368 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9E0094D185E8E76009A2368 /* UIKit.framework */; };
@@ -55,6 +58,8 @@
 		C9E009C1185EB30E009A2368 /* tu2.png in Resources */ = {isa = PBXBuildFile; fileRef = C9E009BD185EB30E009A2368 /* tu2.png */; };
 		C9E009C2185EB30E009A2368 /* tu2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C9E009BE185EB30E009A2368 /* tu2@2x.png */; };
 		C9E009C4185EC342009A2368 /* Mapa_Sample_50.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C9E009C3185EC342009A2368 /* Mapa_Sample_50.jpg */; };
+		C9E8842E1862B16B0014C283 /* BusquedaController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E8842C1862B16B0014C283 /* BusquedaController.m */; };
+		C9E8842F1862B16B0014C283 /* BusquedaController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9E8842D1862B16B0014C283 /* BusquedaController.xib */; };
 		C9E91EF2186001ED0066A74D /* infoLugarView.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E91EF0186001ED0066A74D /* infoLugarView.m */; };
 		C9E91EF3186001ED0066A74D /* infoLugarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9E91EF1186001ED0066A74D /* infoLugarView.xib */; };
 		C9E91F00186007AB0066A74D /* f1.png in Resources */ = {isa = PBXBuildFile; fileRef = C9E91EF6186007AB0066A74D /* f1.png */; };
@@ -99,6 +104,10 @@
 		C92503A61861499800A7123E /* Volcanes_y_cerros.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Volcanes_y_cerros.png; sourceTree = "<group>"; };
 		C92503B21861561400A7123E /* Descargar_imagenes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Descargar_imagenes.h; sourceTree = "<group>"; };
 		C92503B31861561400A7123E /* Descargar_imagenes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Descargar_imagenes.m; sourceTree = "<group>"; };
+		C9DF899218625613005531ED /* bookmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bookmark.png; sourceTree = "<group>"; };
+		C9DF89941862683D005531ED /* FavoritosList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavoritosList.h; sourceTree = "<group>"; };
+		C9DF89951862683D005531ED /* FavoritosList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavoritosList.m; sourceTree = "<group>"; };
+		C9DF89961862683D005531ED /* FavoritosList.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FavoritosList.xib; sourceTree = "<group>"; };
 		C9E00946185E8E76009A2368 /* Guow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Guow.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9E00949185E8E76009A2368 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C9E0094B185E8E76009A2368 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -149,6 +158,9 @@
 		C9E009BD185EB30E009A2368 /* tu2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tu2.png; sourceTree = "<group>"; };
 		C9E009BE185EB30E009A2368 /* tu2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tu2@2x.png"; sourceTree = "<group>"; };
 		C9E009C3185EC342009A2368 /* Mapa_Sample_50.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Mapa_Sample_50.jpg; sourceTree = "<group>"; };
+		C9E8842B1862B16B0014C283 /* BusquedaController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusquedaController.h; sourceTree = "<group>"; };
+		C9E8842C1862B16B0014C283 /* BusquedaController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusquedaController.m; sourceTree = "<group>"; };
+		C9E8842D1862B16B0014C283 /* BusquedaController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BusquedaController.xib; sourceTree = "<group>"; };
 		C9E91EEF186001ED0066A74D /* infoLugarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = infoLugarView.h; sourceTree = "<group>"; };
 		C9E91EF0186001ED0066A74D /* infoLugarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = infoLugarView.m; sourceTree = "<group>"; };
 		C9E91EF1186001ED0066A74D /* infoLugarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = infoLugarView.xib; sourceTree = "<group>"; };
@@ -319,6 +331,7 @@
 		C9E00990185E8FBB009A2368 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				C9DF899218625613005531ED /* bookmark.png */,
 				C9EFF21518623167006496A4 /* close.png */,
 				C9E91EF6186007AB0066A74D /* f1.png */,
 				C9E91EF7186007AB0066A74D /* f1@2x.png */,
@@ -363,6 +376,8 @@
 				C9E009B8185E9ED3009A2368 /* LugarList.xib */,
 				C9E009A8185E9791009A2368 /* ServicioList.xib */,
 				C9E009B2185E9CE6009A2368 /* CategoriaList.xib */,
+				C9DF89961862683D005531ED /* FavoritosList.xib */,
+				C9E8842D1862B16B0014C283 /* BusquedaController.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -395,6 +410,10 @@
 				C9E91EF0186001ED0066A74D /* infoLugarView.m */,
 				C9EFF21018621102006496A4 /* imageZoom.h */,
 				C9EFF21118621102006496A4 /* imageZoom.m */,
+				C9DF89941862683D005531ED /* FavoritosList.h */,
+				C9DF89951862683D005531ED /* FavoritosList.m */,
+				C9E8842B1862B16B0014C283 /* BusquedaController.h */,
+				C9E8842C1862B16B0014C283 /* BusquedaController.m */,
 			);
 			name = Informacion;
 			sourceTree = "<group>";
@@ -495,6 +514,7 @@
 				C9E91EF3186001ED0066A74D /* infoLugarView.xib in Resources */,
 				C9E0098D185E8FB4009A2368 /* menu_close.png in Resources */,
 				C9E91F07186007AB0066A74D /* lup@2x.png in Resources */,
+				C9E8842F1862B16B0014C283 /* BusquedaController.xib in Resources */,
 				C9E009BF185EB30E009A2368 /* tu.png in Resources */,
 				C9E009BA185E9ED3009A2368 /* LugarList.xib in Resources */,
 				C92503B11861499800A7123E /* Volcanes_y_cerros.png in Resources */,
@@ -509,6 +529,8 @@
 				C9E009C0185EB30E009A2368 /* tu@2x.png in Resources */,
 				C92503AA1861499800A7123E /* Hospedaje.png in Resources */,
 				C9EFF21618623167006496A4 /* close.png in Resources */,
+				C9DF899318625613005531ED /* bookmark.png in Resources */,
+				C9DF89981862683D005531ED /* FavoritosList.xib in Resources */,
 				C92503A81861499800A7123E /* Artesanias.png in Resources */,
 				C92503AB1861499800A7123E /* Iglesia_y_conventos.png in Resources */,
 				C92503AD1861499800A7123E /* Restaurantes.png in Resources */,
@@ -536,9 +558,11 @@
 				C9E00963185E8E76009A2368 /* ViewController.m in Sources */,
 				C92503B41861561400A7123E /* Descargar_imagenes.m in Sources */,
 				C9EFF21318621102006496A4 /* imageZoom.m in Sources */,
+				C9DF89971862683D005531ED /* FavoritosList.m in Sources */,
 				C9E009B3185E9CE6009A2368 /* CategoriaList.m in Sources */,
 				C9E009A9185E9791009A2368 /* ServicioList.m in Sources */,
 				C9E91EF2186001ED0066A74D /* infoLugarView.m in Sources */,
+				C9E8842E1862B16B0014C283 /* BusquedaController.m in Sources */,
 				C9E00993185E8FEC009A2368 /* Servicio.m in Sources */,
 				C9E0099D185E915C009A2368 /* MapaViewController.m in Sources */,
 				C9E009B9185E9ED3009A2368 /* LugarList.m in Sources */,

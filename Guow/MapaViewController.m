@@ -11,8 +11,10 @@
 #import "Lugar.h"
 #import "ModelConnection.h"
 #import "Lugar.h"
+#import "FavoritosList.h"
+#import "BusquedaController.h"
 
-@interface MapaViewController () <servicioProtocol,categoriaProtocol,lugarProtocol,UIActionSheetDelegate,UIScrollViewDelegate>{
+@interface MapaViewController () <servicioProtocol,categoriaProtocol,lugarProtocol,UIActionSheetDelegate,UIScrollViewDelegate,favoritosListProtocol,busquedaProtocol>{
     CategoriaList *listCategoria;
     LugarList *listLugar;
     ModelConnection *model;
@@ -26,6 +28,7 @@
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *configButton;
+@property (weak, nonatomic) IBOutlet UINavigationItem *itemsNavegacion;
 
 
 @end
@@ -123,11 +126,6 @@
     
 }
 
--(void)posiciontoque:(UITapGestureRecognizer *)sender{
-    CGPoint point = [sender locationInView:self.scrollView];
-    NSLog(@"X = %f , Y = %f",point.x,point.y);
-}
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -154,10 +152,12 @@
     self.scrollView.delegate = self;
     self.imageView.frame = CGRectMake(0, 0, self.imageView.image.size.width, self.imageView.image.size.height);
     self.scrollView.decelerationRate = UIScrollViewDecelerationRateFast;
-    UITapGestureRecognizer *tapgesture=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(posiciontoque:)];
-    tapgesture.numberOfTapsRequired = 1;
     menuTouch = 2;
     idBusqueda = @"1";
+    UIBarButtonItem *btnBookmark = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"bookmark.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(openBookMarks)];
+    [self.itemsNavegacion setRightBarButtonItems:[NSArray arrayWithObjects:self.configButton,btnBookmark, nil]];
+    UIBarButtonItem *busquedaButton = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"lup.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(openSearch)];
+    [self.itemsNavegacion setLeftBarButtonItems:[NSArray arrayWithObjects:self.MenuButton,busquedaButton, nil]];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -182,6 +182,25 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+// ABRIR FAVORITOS
+-(void)openBookMarks{
+    FavoritosList *fav = [[FavoritosList alloc]initWithStyle:UITableViewStylePlain];
+    [fav setDelegate:self];
+    UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:fav];
+    nav.modalPresentationStyle = UIModalPresentationFormSheet;
+    nav.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    [self presentViewController:nav animated:YES completion:nil];
+}
+
+-(void)openSearch{
+    BusquedaController *bus = [[BusquedaController alloc]init];
+    [bus setDelegate:self];
+    bus.modalPresentationStyle = UIModalPresentationFormSheet;
+    bus.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    [self presentViewController:bus animated:YES completion:nil];
 }
 
 - (IBAction)menuButtonAction:(id)sender {
@@ -228,7 +247,6 @@
         default:
             break;
     }
-    [defaults setObject:[NSArray arrayWithObjects:@"Hola", nil] forKey:@"favoritos"];
     [defaults synchronize];
     [listServicio cambioIdioma];
     if (listCategoria != nil) [listCategoria cambioIdioma];
@@ -284,6 +302,15 @@
 -(void)cerrarInfoPanel{
     self.configButton.enabled = YES;
     [_actionDelagate movePanelToOriginalPosition];
+}
+
+-(void)cerrarBookmarks:(NSString *)lugar{
+    if (![lugar isEqualToString:@""]) {
+        menuTouch = 4;
+        idBusqueda = lugar;
+        [self cargarDatos];
+    }
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

@@ -16,6 +16,7 @@
     
     if (![defaults boolForKey:@"ValoresGuardados"])
     {
+        NSMutableArray *favoritos = [[NSMutableArray alloc]init];
         NSArray* languages = [defaults objectForKey:@"AppleLanguages"];
         NSString* preferredLang = [languages objectAtIndex:0];
         int o=2;
@@ -27,6 +28,7 @@
                                        [NSNumber numberWithBool:NO],@"aceptado",
                                        [NSNumber numberWithBool:YES], @"descargas",
                                        [NSNumber numberWithBool:NO],@"isTurismo",
+                                       favoritos,@"favoritos",
                                        //[NSNumber numberWithBool:YES], @"kMostrarMensaje",
                                        //@"ThXou", @"kMiNombre",
                                        //nil, @"kUltimaVisita",
