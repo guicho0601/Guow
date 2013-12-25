@@ -49,7 +49,9 @@
 }
 
 -(BOOL)comprobarActualizaciones{
-    [self conexion];
+    if (![self conexion]) {
+        return NO;
+    }
     NSFileManager *mgfile = [NSFileManager defaultManager];
     NSString* file_propio = [[self getDirectorio] stringByAppendingFormat:@"/ultimaactualizacion.ant"];
     NSString *file = [[self getDirectorio] stringByAppendingString:@"/actualizacion.ant"];

@@ -7,11 +7,32 @@
 //
 
 #import "AppDelegate.h"
+#import "ModelConnection.h"
+#import "Descargar_imagenes.h"
 
 @implementation AppDelegate
 
+-(void)descargarInfo{
+    ModelConnection *model = [[ModelConnection alloc]init];
+    if ([model comprobarActualizaciones]) {
+        NSLog(@"Si hay actualizaciones");
+        NSLog(@"Descargando...");
+        [model descargarInfo:@"select * from servicio" Archivo:@"servicio"];
+        [model descargarInfo:@"select * from categoria" Archivo:@"categoria"];
+        [model descargarInfo:@"select * from lugar" Archivo:@"lugar"];
+        [model descargarInfo:@"select * from img_turismo" Archivo:@"imagenes"];
+        NSLog(@"Terminando Descarga...");
+    }
+    model = nil;
+    Descargar_imagenes *descarga = [[Descargar_imagenes alloc]init];
+    [descarga iniciar_descarga];
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    //NSThread *myThread = [[NSThread alloc]initWithTarget:self selector:@selector(descargarInfo) object:nil];
+    //[myThread start];
+    [self descargarInfo];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
     if (![defaults boolForKey:@"ValoresGuardados"])
@@ -29,6 +50,7 @@
                                        [NSNumber numberWithBool:YES], @"descargas",
                                        [NSNumber numberWithBool:NO],@"isTurismo",
                                        favoritos,@"favoritos",
+                                       
                                        //[NSNumber numberWithBool:YES], @"kMostrarMensaje",
                                        //@"ThXou", @"kMiNombre",
                                        //nil, @"kUltimaVisita",
@@ -36,7 +58,10 @@
                                        nil];
         
         [defaults registerDefaults:defaultValues];
+
     }
+    [defaults setObject:@"Turismo.png" forKey:@"logoTurismo"];
+    [defaults synchronize];
     return YES;
 }
 							

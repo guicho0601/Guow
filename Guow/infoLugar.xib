@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="12F45" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="infoLugar">
+            <connections>
+                <outlet property="barraTitulo" destination="49A-ay-bFx" id="ehV-Bh-pHP"/>
+                <outlet property="buttonBarBack" destination="rhy-y5-CAd" id="rmI-H8-8UY"/>
+                <outlet property="buttonBarConfig" destination="vkX-WV-WWi" id="uXV-fX-a1j"/>
+                <outlet property="navigationBarra" destination="8oD-Xu-LSg" id="drZ-6P-fkx"/>
+                <outlet property="tableView" destination="hea-rR-L5X" id="P4K-Jo-bFy"/>
+                <outlet property="view" destination="1" id="3"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="1">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8oD-Xu-LSg">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                    <textAttributes key="titleTextAttributes">
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </textAttributes>
+                    <items>
+                        <navigationItem title="Title" id="49A-ay-bFx">
+                            <barButtonItem key="leftBarButtonItem" image="f1.png" id="rhy-y5-CAd">
+                                <connections>
+                                    <action selector="volverAtras:" destination="-1" id="iZy-md-5Pl"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem key="rightBarButtonItem" image="tu2.png" id="vkX-WV-WWi">
+                                <connections>
+                                    <action selector="configButtonAction:" destination="-1" id="2O8-21-lih"/>
+                                </connections>
+                            </barButtonItem>
+                        </navigationItem>
+                    </items>
+                </navigationBar>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="hea-rR-L5X">
+                    <rect key="frame" x="0.0" y="44" width="320" height="524"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                </tableView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="8oD-Xu-LSg" secondAttribute="trailing" id="BA0-BJ-Ghe"/>
+                <constraint firstAttribute="bottom" secondItem="hea-rR-L5X" secondAttribute="bottom" id="Ecf-S2-UWk"/>
+                <constraint firstItem="hea-rR-L5X" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="SNv-kE-x59"/>
+                <constraint firstItem="8oD-Xu-LSg" firstAttribute="top" secondItem="1" secondAttribute="top" id="atu-fn-vCt"/>
+                <constraint firstItem="hea-rR-L5X" firstAttribute="top" secondItem="8oD-Xu-LSg" secondAttribute="bottom" id="dZR-JY-Yaf"/>
+                <constraint firstItem="8oD-Xu-LSg" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="iTb-Ag-0Ks"/>
+                <constraint firstAttribute="trailing" secondItem="hea-rR-L5X" secondAttribute="trailing" id="inQ-I9-d7Z"/>
+            </constraints>
+            <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="f1.png" width="25" height="25"/>
+        <image name="tu2.png" width="25" height="25"/>
+    </resources>
+</document>

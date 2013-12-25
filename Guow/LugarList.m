@@ -118,6 +118,7 @@
         NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
         if ([def boolForKey:@"isTurismo"]) {
             cell.imageView.image = [UIImage imageNamed:aux.logo];
+            [def setObject:aux.logo forKey:@"logoTurismo"];
         }
     }
     return cell;

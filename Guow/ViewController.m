@@ -10,7 +10,7 @@
 #import "ModelConnection.h"
 #import "MapaViewController.h"
 #import "ServicioList.h"
-#import "infoLugarView.h"
+#import "infoLugar.h"
 #import "Descargar_imagenes.h"
 #import <QuartzCore/QuartzCore.h>
 #define CENTER_TAG 1
@@ -27,7 +27,7 @@
 @property (nonatomic, strong) MapaViewController *centerView;
 @property (nonatomic, strong) UINavigationController *navigator;
 @property (nonatomic, strong) ServicioList *menuView;
-@property (nonatomic, strong) infoLugarView *rightPanelViewController;
+@property (nonatomic, strong) infoLugar *rightPanelViewController;
 @property (nonatomic, assign) BOOL showingLeftPanel;
 @property (nonatomic, assign) BOOL showingRightPanel;
 
@@ -38,8 +38,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	NSThread *myThread = [[NSThread alloc]initWithTarget:self selector:@selector(descargarInfo) object:nil];
-    [myThread start];
+	//NSThread *myThread = [[NSThread alloc]initWithTarget:self selector:@selector(descargarInfo) object:nil];
+    //[myThread start];
     [self setupView];
 }
 
@@ -82,7 +82,7 @@
 {
     if (_navigator != nil) {
         _centerView.MenuButton.tag = 0;
-        _centerView.MenuButton.image = [UIImage imageNamed:@"glyphicons_158_show_lines.png"];
+        _centerView.MenuButton.image = [UIImage imageNamed:@"menu_close.png"];
         self.showingLeftPanel = NO;
     }
     if (_rightPanelViewController != nil) {
@@ -122,7 +122,7 @@
 - (UIView *)getRightView
 {
     if (_rightPanelViewController == nil) {
-        self.rightPanelViewController = [[infoLugarView alloc]initWithNibName:@"infoLugarView" bundle:nil];
+        self.rightPanelViewController = [[infoLugar alloc]initWithNibName:@"infoLugar" bundle:nil];
         self.rightPanelViewController.view.tag =RIGHT_PANEL_TAG;
         [self.rightPanelViewController reciveMapView:self.centerView];
         
@@ -131,7 +131,7 @@
         [self.view bringSubviewToFront:self.rightPanelViewController.view];
         [_rightPanelViewController didMoveToParentViewController:self];
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-            _rightPanelViewController.view.frame = CGRectMake(self.view.frame.size.height-320, 0, 320, self.view.frame.size.width);
+            _rightPanelViewController.view.frame = CGRectMake(self.view.frame.size.height-320, 0, 320, self.view.frame.size.height);
         }else{
             _rightPanelViewController.view.frame = CGRectMake(0,0, self.view.frame.size.width, self.view.frame.size.height);
         }
@@ -151,7 +151,7 @@
     } completion:^(BOOL finished){
         if (finished) {
             _centerView.MenuButton.tag = 1;
-            _centerView.MenuButton.image = [UIImage imageNamed:@"glyphicons_157_show_thumbnails_with_lines.png"];
+            _centerView.MenuButton.image = [UIImage imageNamed:@"menu_open.png"];
         }
     }];
 }
@@ -164,9 +164,10 @@
     
     int tam;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-        tam = -self.view.frame.size.width + PANEL_WIDTH;
+        //tam = -self.view.frame.size.width + PANEL_WIDTH;
+        tam = -self.view.frame.size.width;
     }else{
-        tam = -self.view.frame.size.width + self.view.frame.size.height - 260;
+        tam = -self.view.frame.size.width + self.view.frame.size.height - 320;
     }
     
     [UIView animateWithDuration:SLIDE_TIMING delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
@@ -201,7 +202,7 @@
 
 -(void)descargarInfo{
     model = [[ModelConnection alloc]init];
-    if ([model comprobarActualizaciones]) {
+    if (![model comprobarActualizaciones]) {
         NSLog(@"Si hay actualizaciones");
         NSLog(@"Descargando...");
         [model descargarInfo:@"select * from servicio" Archivo:@"servicio"];

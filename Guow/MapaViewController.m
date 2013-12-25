@@ -86,12 +86,9 @@
 
 
 -(void)ubicarbotones:(NSString*)titulo imagen:(NSString*)imgName horizontal:(float)x vertical:(float)y{
-    //x = y = 1500;
     UIImage *imagen;
-    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
-    if ([def boolForKey:@"isTurismo"]) {
-        imagen = [UIImage imageNamed:[def stringForKey:@"logoTurismo"]];
-    }
+    NSArray *stArray = [imgName componentsSeparatedByString:@"/"];
+    if (stArray.count == 1) imagen = [UIImage imageNamed:imgName];
     UIButton *btnDetail = [UIButton buttonWithType:UIButtonTypeCustom];
     btnDetail.frame = CGRectMake(x,y,imagen.size.width,imagen.size.height);
     [btnDetail addTarget:self action:@selector(abririnfo:) forControlEvents:UIControlEventTouchUpInside];
@@ -105,10 +102,14 @@
 }
 
 -(void)abririnfo:(UIButton *)sender{
+    
     idLugar = sender.titleLabel.text;
     self.configButton.enabled = NO;
     [_actionDelagate lugarSeleccionado:idLugar];
     [_actionDelagate movePanelRight];
+    
+    //infoLugar *info = [[infoLugar alloc]init];
+    //[self presentViewController:info animated:YES completion:nil];
 }
 
 -(NSString*)idInfolugar{
