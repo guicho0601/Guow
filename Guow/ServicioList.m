@@ -9,10 +9,11 @@
 #import "ServicioList.h"
 #import "Servicio.h"
 #import "ModelConnection.h"
+#import "FavoritosList.h"
 #define TABLA @"servicio"
+#define color_base [UIColor colorWithRed:(254/255.0) green:(194/255.0) blue:(15/255.0) alpha:1]
 
-
-@interface ServicioList (){
+@interface ServicioList ()<favoritosListProtocol>{
     NSMutableArray *serviciosArray;
     ModelConnection *model;
 }
@@ -44,6 +45,21 @@
         aux.icono = [info objectForKey:@"icono"];
         [serviciosArray addObject:aux];
     }
+    
+    aux = [[Servicio alloc]init];
+    aux.servicioesp = @"Informacion general";
+    aux.servicioing = @"General Info";
+    [serviciosArray addObject:aux];
+    
+    aux = [[Servicio alloc]init];
+    aux.servicioesp = @"Favoritos";
+    aux.servicioing = @"Favorites";
+    [serviciosArray addObject:aux];
+    
+    aux = [[Servicio alloc]init];
+    aux.servicioesp = @"Promociones";
+    aux.servicioing = @"Promotions";
+    [serviciosArray addObject:aux];
 }
 
 -(void)cambioIdioma{
@@ -80,7 +96,7 @@
 -(void)viewWillAppear:(BOOL)animated{
     [self cargarDatos];
     [self establecerTitulo];
-    //[self.tableView setBackgroundColor:[UIColor blackColor]];
+    [self.tableView setBackgroundColor:color_base];
 }
 
 - (void)didReceiveMemoryWarning
@@ -113,6 +129,7 @@
     if ([model comprobarIdioma]==1) cell.textLabel.text = aux.servicioesp;
     else cell.textLabel.text = aux.servicioing;
     if(aux.icono != nil) cell.imageView.image = [UIImage imageNamed:aux.icono];
+    cell.backgroundColor = color_base;
     return cell;
 }
 
@@ -163,7 +180,17 @@
 {
     if (indexPath.row == 0) {
         [_delegate allServices];
-    }else{
+    }else if (indexPath.row==2){
+        
+    }else if (indexPath.row==3){
+        FavoritosList *fav = [[FavoritosList alloc]init];
+        [fav setDelegate:self];
+        [self.navigationController pushViewController:fav animated:YES];
+        //[self presentViewController:fav animated:YES completion:nil];
+    }else if (indexPath.row==4){
+        [_delegate abrirPromociones];
+    }
+    else{
         CategoriaList *catList = [[CategoriaList alloc]initWithStyle:UITableViewStyleGrouped];
         [_delegate sendCategoria:catList];
         Servicio *aux = [serviciosArray objectAtIndex:indexPath.row];
@@ -172,5 +199,8 @@
     }
 }
 
+-(void)cerrarBookmarks:(NSString *)lugar{
+    [_delegate abrirFavorito:lugar];
+}
 
 @end

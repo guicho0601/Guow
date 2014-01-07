@@ -159,7 +159,7 @@
             [cell nombre:titulos];
             [cell setDelegate:self];
             [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-            CellTitulos = cell;
+            CellTitulos = cell;            
             return cell;
             break;
         }
@@ -206,8 +206,12 @@
         case 1:
             return 148;
             break;
-        case 2:
-            return 505;
+        case 2:{
+            UITableViewCell *cell = [self tableView:tableView
+                              cellForRowAtIndexPath:indexPath];
+            return cell.frame.size.height;
+        }
+         //   return 505;
             break;
         case 3:
             return 200;

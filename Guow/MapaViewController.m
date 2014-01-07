@@ -13,8 +13,11 @@
 #import "Lugar.h"
 #import "FavoritosList.h"
 #import "BusquedaController.h"
+#import "TablaPromociones.h"
 
-@interface MapaViewController () <servicioProtocol,categoriaProtocol,lugarProtocol,UIActionSheetDelegate,UIScrollViewDelegate,favoritosListProtocol,busquedaProtocol>{
+#define COLOR_BASE [UIColor colorWithRed:254.0/255.0 green:194.0/255.0 blue:15.0/255.0 alpha:1.0];
+
+@interface MapaViewController () <servicioProtocol,categoriaProtocol,lugarProtocol,UIActionSheetDelegate,UIScrollViewDelegate,favoritosListProtocol,busquedaProtocol,PromocionesProtocol>{
     CategoriaList *listCategoria;
     LugarList *listLugar;
     ModelConnection *model;
@@ -24,6 +27,7 @@
     NSString *idBusqueda;
     float ultx, ulty;
     NSString *idLugar;
+    UIActivityIndicatorView	*indicador;
 }
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
@@ -146,7 +150,7 @@
 {
     [super viewDidLoad];
     model = [[ModelConnection alloc]init];
-    
+    self.view.backgroundColor = COLOR_BASE;
     UIImage *image = [UIImage imageNamed:@"Mapa_Sample_50.jpg"];
     [self.imageView setImage:image];
     [self.imageView sizeToFit];
@@ -155,8 +159,8 @@
     self.scrollView.decelerationRate = UIScrollViewDecelerationRateFast;
     menuTouch = 2;
     idBusqueda = @"1";
-    UIBarButtonItem *btnBookmark = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"bookmark.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(openBookMarks)];
-    [self.itemsNavegacion setRightBarButtonItems:[NSArray arrayWithObjects:self.configButton,btnBookmark, nil]];
+    //UIBarButtonItem *btnBookmark = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"bookmark.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(openBookMarks)];
+    //[self.itemsNavegacion setRightBarButtonItems:[NSArray arrayWithObjects:self.configButton,btnBookmark, nil]];
     UIBarButtonItem *busquedaButton = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"lup.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(openSearch)];
     [self.itemsNavegacion setLeftBarButtonItems:[NSArray arrayWithObjects:self.MenuButton,busquedaButton, nil]];
 }
@@ -312,6 +316,46 @@
         [self cargarDatos];
     }
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(void)abrirFavorito:(NSString *)lugar{
+    menuTouch = 4;
+    idBusqueda = lugar;
+    [self cargarDatos];
+    [_actionDelagate movePanelToOriginalPosition];
+}
+
+-(void)abrirPromociones{
+    [_actionDelagate movePanelToOriginalPosition];
+    
+    indicador = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    [indicador setHidesWhenStopped:YES];
+    [indicador setCenter:self.view.center];
+    [self.view addSubview:indicador];
+    [indicador startAnimating];
+    
+    TablaPromociones *tabla = [[TablaPromociones alloc]initWithStyle:UITableViewStyleGrouped];
+    //UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:tabla];
+    tabla.modalPresentationStyle = UIModalPresentationFormSheet;
+    tabla.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    [tabla setDelegate:self];
+    [self presentViewController:tabla animated:YES completion:nil];
+ 
+}
+
+-(void)cerrarPromocion{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(void)terminaCargaPromocion{
+    [indicador stopAnimating];
+}
+
+-(void)abrirLugarPromocion:(NSString *)idlugar{
+    [self dismissViewControllerAnimated:YES completion:nil];
+    menuTouch = 4;
+    idBusqueda = idlugar;
+    [self cargarDatos];
 }
 
 @end

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="12F45" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="230" id="0un-8K-Kdu" customClass="CeldaPromociones">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="230"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0un-8K-Kdu" id="2Ts-F7-gjQ">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="229"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rXH-UW-ib8">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="185"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    </imageView>
+                    <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pcr-kt-z7x">
+                        <rect key="frame" x="0.0" y="185" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                        <items>
+                            <barButtonItem title="Item" id="RKQ-sK-b4c">
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </barButtonItem>
+                            <barButtonItem style="plain" systemItem="flexibleSpace" id="20Y-dy-d0z"/>
+                            <barButtonItem image="f1.png" id="RZW-mN-HX5">
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <action selector="goPlace:" destination="0un-8K-Kdu" id="R9g-Tr-D4i"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem image="fb.png" id="IUo-se-HV1">
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <action selector="FBButton:" destination="0un-8K-Kdu" id="fOq-bZ-3MC"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem image="twit.png" id="b2d-iM-5ay">
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <action selector="TWButton:" destination="0un-8K-Kdu" id="FDl-I6-XVq"/>
+                                </connections>
+                            </barButtonItem>
+                        </items>
+                        <color key="barTintColor" red="0.99607843139999996" green="0.76078431369999999" blue="0.058823529409999999" alpha="1" colorSpace="calibratedRGB"/>
+                    </toolbar>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="pcr-kt-z7x" secondAttribute="trailing" id="4nu-BN-S17"/>
+                    <constraint firstItem="pcr-kt-z7x" firstAttribute="top" secondItem="rXH-UW-ib8" secondAttribute="bottom" id="BfN-iz-STe"/>
+                    <constraint firstItem="rXH-UW-ib8" firstAttribute="top" secondItem="2Ts-F7-gjQ" secondAttribute="top" id="QXN-y0-VYD"/>
+                    <constraint firstItem="rXH-UW-ib8" firstAttribute="leading" secondItem="2Ts-F7-gjQ" secondAttribute="leading" id="fUz-ZD-j9o"/>
+                    <constraint firstAttribute="bottom" secondItem="pcr-kt-z7x" secondAttribute="bottom" id="rg4-5Y-8oY"/>
+                    <constraint firstItem="pcr-kt-z7x" firstAttribute="leading" secondItem="2Ts-F7-gjQ" secondAttribute="leading" id="wQ0-xU-gkm"/>
+                    <constraint firstAttribute="trailing" secondItem="rXH-UW-ib8" secondAttribute="trailing" id="yqI-fl-9pa"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="NamePlace" destination="RKQ-sK-b4c" id="36x-Tz-5Yi"/>
+                <outlet property="imageView" destination="rXH-UW-ib8" id="3YD-mt-u9G"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="f1.png" width="25" height="25"/>
+        <image name="fb.png" width="25" height="25"/>
+        <image name="twit.png" width="25" height="25"/>
+    </resources>
+</document>

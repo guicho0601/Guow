@@ -57,9 +57,9 @@
 {
     [super viewDidLoad];
     [self cargarDatos];
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"f1.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(closeBookmarks)];
-    self.navigationItem.leftBarButtonItem = backButton;
-    self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    //UIBarButtonItem *backButton = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"f1.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(closeBookmarks)];
+//    self.navigationItem.leftBarButtonItem = backButton;
+  //  self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 -(void)closeBookmarks{
@@ -105,7 +105,6 @@
     [super setEditing:editing animated:animated];
     [self.tableView setEditing:editing animated:YES];
 }
-
 
 
 

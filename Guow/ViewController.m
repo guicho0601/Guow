@@ -131,7 +131,7 @@
         [self.view bringSubviewToFront:self.rightPanelViewController.view];
         [_rightPanelViewController didMoveToParentViewController:self];
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-            _rightPanelViewController.view.frame = CGRectMake(self.view.frame.size.height-320, 0, 320, self.view.frame.size.height);
+            _rightPanelViewController.view.frame = CGRectMake(self.view.frame.size.height-320, 0, 320, self.view.frame.size.width);
         }else{
             _rightPanelViewController.view.frame = CGRectMake(0,0, self.view.frame.size.width, self.view.frame.size.height);
         }
