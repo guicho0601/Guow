@@ -27,7 +27,7 @@
                     </textAttributes>
                     <items>
                         <navigationItem title="Title" id="49A-ay-bFx">
-                            <barButtonItem key="leftBarButtonItem" image="f1.png" id="rhy-y5-CAd">
+                            <barButtonItem key="leftBarButtonItem" image="ic22.png" id="rhy-y5-CAd">
                                 <connections>
                                     <action selector="volverAtras:" destination="-1" id="iZy-md-5Pl"/>
                                 </connections>
@@ -62,7 +62,7 @@
         </view>
     </objects>
     <resources>
-        <image name="f1.png" width="25" height="25"/>
+        <image name="ic22.png" width="50" height="50"/>
         <image name="tu2.png" width="25" height="25"/>
     </resources>
 </document>

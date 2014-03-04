@@ -59,7 +59,7 @@
     [self descargarInfo:@"select fecha from actualizacion where id=1" Archivo:@"actualizacion"];
     NSError *error;
     NSString *newDate = [NSString stringWithContentsOfFile:file encoding:NSUTF8StringEncoding error:&error];
-    //NSLog(@"%@",newDate);
+    NSLog(@"%@",newDate);
     
     if (![mgfile fileExistsAtPath:file_propio]) {
         [mgfile createFileAtPath:file_propio contents:nil attributes:nil];
@@ -68,7 +68,7 @@
     }
     
     NSString *oldDate = [NSString stringWithContentsOfFile:file_propio encoding:NSUTF8StringEncoding error:&error];
-    //NSLog(@"%@",oldDate);
+    NSLog(@"%@",oldDate);
     
     if (![newDate isEqualToString:oldDate]) {
         [newDate writeToFile:file_propio atomically:NO encoding:NSStringEncodingConversionAllowLossy error:nil];
@@ -89,10 +89,12 @@
     if (networkStatus == ReachableViaWWAN) {
         
         NSLog(@"Conexion Datos");
+        return YES;
         
     } else if (networkStatus == ReachableViaWiFi) {
         
         NSLog(@"WiFi");
+        return YES;
         
     } else if (networkStatus == NotReachable) {
         
@@ -128,6 +130,5 @@
     
     return fotointerna;
 }
-
 
 @end

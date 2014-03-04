@@ -13,7 +13,7 @@
 @optional
 -(void)facebookOpen;
 -(void)twitterOpen;
-
+-(void)mailOpen;
 @end
 
 @interface tituloTableCell : UITableViewCell

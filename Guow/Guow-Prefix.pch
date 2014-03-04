@@ -15,4 +15,10 @@
     #import <Foundation/Foundation.h>
 #endif
 
-#define color_base [UIColor colorWithRed:(254/255.0) green:(194/255.0) blue:(15/255.0) alpha:1]
+#define COLOR_BASE [UIColor colorWithRed:(254/255.0) green:(194/255.0) blue:(15/255.0) alpha:1]
+
+#define FUENTE @"PTSans-Bold"
+
+#define GRIS @"Iconos Grises/"
+
+#define AMARILLO @"Iconos Amarillo/"

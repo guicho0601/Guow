@@ -99,6 +99,7 @@
     if (_navigator == nil) {
         self.menuView = [[ServicioList alloc]initWithStyle:UITableViewStylePlain];
         self.navigator = [[UINavigationController alloc]initWithRootViewController:self.menuView];
+        
         self.navigator.view.tag = LEFT_PANEL_TAG;
         /*
         UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"Show" style:UIBarButtonItemStylePlain
@@ -108,7 +109,7 @@
          */
         [self.view addSubview:self.navigator.view];
         [_navigator didMoveToParentViewController:self];
-        _navigator.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+        _navigator.view.frame = CGRectMake(0, 0, self.view.frame.size.width-PANEL_WIDTH, self.view.frame.size.height);
         
         [self.centerView sendServicio:self.menuView];
         

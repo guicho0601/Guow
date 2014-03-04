@@ -89,6 +89,12 @@
     }else{
         cell.textLabel.text = [nombresLugares objectAtIndex:indexPath.row];
     }
+    
+    cell.textLabel.text = [cell.textLabel.text uppercaseString];
+    cell.textLabel.font = [UIFont fontWithName:FUENTE size:12.0f];
+    [cell.imageView setContentMode:UIViewContentModeScaleAspectFit];
+    cell.textLabel.numberOfLines = 2;
+    
     return cell;
 }
 

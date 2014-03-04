@@ -35,6 +35,7 @@
     Servicio *aux = [[Servicio alloc]init];
     aux.servicioesp = @"Mostrar todos";
     aux.servicioing = @"Show all";
+    aux.icono = @"ic13.png";
     [serviciosArray addObject:aux];
     for (int i=0; i<adat.count; i++) {
         NSDictionary *info = [adat objectAtIndex:i];
@@ -49,16 +50,25 @@
     aux = [[Servicio alloc]init];
     aux.servicioesp = @"Informacion general";
     aux.servicioing = @"General Info";
+    aux.icono = @"ic14.png";
     [serviciosArray addObject:aux];
     
     aux = [[Servicio alloc]init];
     aux.servicioesp = @"Favoritos";
     aux.servicioing = @"Favorites";
+    aux.icono = @"ic16.png";
     [serviciosArray addObject:aux];
     
     aux = [[Servicio alloc]init];
     aux.servicioesp = @"Promociones";
     aux.servicioing = @"Promotions";
+    aux.icono = @"ic15.png";
+    [serviciosArray addObject:aux];
+    
+    aux = [[Servicio alloc]init];
+    aux.servicioesp = @"Conocenos";
+    aux.servicioing = @"About us";
+    aux.icono = @"ic14.png";
     [serviciosArray addObject:aux];
 }
 
@@ -96,7 +106,7 @@
 -(void)viewWillAppear:(BOOL)animated{
     [self cargarDatos];
     [self establecerTitulo];
-    [self.tableView setBackgroundColor:color_base];
+    //[self.tableView setBackgroundColor:[UIColor whiteColor]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -120,6 +130,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
+    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
@@ -128,49 +139,18 @@
     Servicio *aux = [serviciosArray objectAtIndex:indexPath.row];
     if ([model comprobarIdioma]==1) cell.textLabel.text = aux.servicioesp;
     else cell.textLabel.text = aux.servicioing;
-    if(aux.icono != nil) cell.imageView.image = [UIImage imageNamed:aux.icono];
-    cell.backgroundColor = color_base;
+    if(aux.icono != nil) cell.imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@%@",AMARILLO,aux.icono]];
+    cell.textLabel.text = [cell.textLabel.text uppercaseString];
+    //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    cell.accessoryView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"ic19.png"]];
+    cell.textLabel.font = [UIFont fontWithName:FUENTE size:12.0f];
+    [cell.imageView setContentMode:UIViewContentModeScaleAspectFit];
     return cell;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 35;
 }
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 
 #pragma mark - Table view delegate
@@ -189,6 +169,9 @@
         //[self presentViewController:fav animated:YES completion:nil];
     }else if (indexPath.row==4){
         [_delegate abrirPromociones];
+    }
+    else if(indexPath.row == 5){
+        [_delegate abrirAbout];
     }
     else{
         CategoriaList *catList = [[CategoriaList alloc]initWithStyle:UITableViewStyleGrouped];

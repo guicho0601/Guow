@@ -22,6 +22,9 @@
     for (int i=0; i<adat.count; i++){
         NSDictionary *info = [adat objectAtIndex:i];
         [images addObject:[info objectForKey:@"imgesp"]];
+        if (![[info objectForKey:@"servicio"]isEqualToString:@"1"]) {
+             [images addObject:[info objectForKey:@"logo"]];
+        }
     }
     adat = [model consulta:@"imagenes"];
     for (int i=0; i<adat.count; i++) {

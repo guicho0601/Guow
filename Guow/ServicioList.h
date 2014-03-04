@@ -16,6 +16,7 @@
 -(void)sendCategoria:(CategoriaList*)list;
 -(void)abrirFavorito:(NSString*)lugar;
 -(void)abrirPromociones;
+-(void)abrirAbout;
 @end
 
 @interface ServicioList : UITableViewController

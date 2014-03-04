@@ -43,7 +43,7 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.imageView.image = imagen;
-    [self.scrollView setBackgroundColor:[UIColor blackColor]];
+    //[self.scrollView setBackgroundColor:[UIColor blackColor]];
     [self ajustarImagen];
 }
 
@@ -81,7 +81,8 @@
     self.imageView.frame = CGRectMake(px, py, ancho, alto);
     puntox = px;
     puntoy = py;
-    [self.scrollView setContentSize:tam];
+    //[self.scrollView setContentSize:tam];
+    [self.scrollView setContentSize:self.view.frame.size];
 }
 
 -(UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView{
@@ -97,12 +98,17 @@
 -(void)scrollViewWillBeginZooming:(UIScrollView *)scrollView withView:(UIView *)view{
     if (self.scrollView.zoomScale == 1.0) {
         self.imageView.frame = CGRectMake(0, 0, self.imageView.frame.size.width, self.imageView.frame.size.height);
+    }else{
+        self.imageView.frame = CGRectMake(puntox, puntoy/self.scrollView.zoomScale, self.imageView.frame.size.width, self.imageView.frame.size.height);
     }
+    
 }
 
 -(void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(CGFloat)scale{
     if (self.scrollView.zoomScale == 1.0) {
         self.imageView.frame = CGRectMake(puntox, puntoy, self.imageView.frame.size.width, self.imageView.frame.size.height);
+    }else{
+        self.imageView.frame = CGRectMake(puntox, puntoy/self.scrollView.zoomScale, self.imageView.frame.size.width, self.imageView.frame.size.height);
     }
 }
 

@@ -10,6 +10,7 @@
                 <outlet property="configButton" destination="F6D-rm-FM4" id="OHa-a5-0Vg"/>
                 <outlet property="imageView" destination="QaC-ls-7WP" id="p1n-I0-PDw"/>
                 <outlet property="itemsNavegacion" destination="tOp-Q8-2gD" id="0nP-MP-gKH"/>
+                <outlet property="navegadorBarra" destination="knq-Ko-dgg" id="2Uw-0a-slU"/>
                 <outlet property="scrollView" destination="y1G-fb-tlZ" id="53h-qP-TVk"/>
                 <outlet property="view" destination="1" id="xgu-QQ-XgC"/>
             </connections>
@@ -19,6 +20,11 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view contentMode="scaleToFill" id="Fap-st-Joz">
+                    <rect key="frame" x="140" y="264" width="40" height="40"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                </view>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" alwaysBounceHorizontal="YES" minimumZoomScale="0.5" maximumZoomScale="2" id="y1G-fb-tlZ">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -38,11 +44,13 @@
                     <items>
                         <navigationItem title="Guow Antigua" id="tOp-Q8-2gD">
                             <barButtonItem key="leftBarButtonItem" image="menu_close.png" id="ry8-3h-dwb">
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <action selector="menuButtonAction:" destination="-1" id="FBh-cf-THO"/>
                                 </connections>
                             </barButtonItem>
                             <barButtonItem key="rightBarButtonItem" image="tu2.png" id="F6D-rm-FM4">
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <action selector="selectLanguage:" destination="-1" id="igN-Lq-cVK"/>
                                 </connections>

@@ -35,11 +35,13 @@
                     <items>
                         <navigationItem title="Guow Antigua" id="J8Z-Q4-gPq">
                             <barButtonItem key="leftBarButtonItem" image="menu_close.png" id="tSU-0y-SsH">
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <action selector="menuButtonAction:" destination="-1" id="L1f-dx-l95"/>
                                 </connections>
                             </barButtonItem>
                             <barButtonItem key="rightBarButtonItem" image="tu2.png" id="vze-En-R1q">
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <action selector="selectLanguage:" destination="-1" id="HBL-DW-SD8"/>
                                 </connections>

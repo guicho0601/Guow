@@ -57,10 +57,15 @@
 {
     [super viewDidLoad];
     [self cargarDatos];
-    //UIBarButtonItem *backButton = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"f1.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(closeBookmarks)];
-//    self.navigationItem.leftBarButtonItem = backButton;
-  //  self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    UIBarButtonItem *but = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"ic22.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(backMenu)];
+    [but setTintColor:[UIColor whiteColor]];
+    [self.navigationItem setLeftBarButtonItem:but];
 }
+
+-(void)backMenu{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 
 -(void)closeBookmarks{
     [_delegate cerrarBookmarks:@""];
@@ -95,9 +100,15 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-        Lugar *aux = [lugares objectAtIndex:indexPath.row];
-        cell.textLabel.text = aux.nombre;
-        cell.imageView.image = [UIImage imageNamed:aux.logo];
+    
+    Lugar *aux = [lugares objectAtIndex:indexPath.row];
+    cell.textLabel.text = aux.nombre;
+    cell.imageView.image = [UIImage imageNamed:aux.logo];
+    
+    cell.textLabel.text = [cell.textLabel.text uppercaseString];
+    cell.textLabel.font = [UIFont fontWithName:FUENTE size:12.0f];
+    [cell.imageView setContentMode:UIViewContentModeScaleAspectFit];
+    cell.textLabel.numberOfLines = 2;
     return cell;
 }
 
@@ -146,23 +157,6 @@
      */
     [self.tableView reloadData];
 }
-
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 
 #pragma mark - Table view delegate

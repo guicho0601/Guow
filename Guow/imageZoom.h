@@ -16,6 +16,7 @@
 @end
 
 @interface imageZoom : UIViewController
+@property (assign, nonatomic) NSInteger index;
 @property (nonatomic, assign) id<imageZoomProtocol> delegate;
 -(void)envioImagen:(NSString*)nombre;
 @end

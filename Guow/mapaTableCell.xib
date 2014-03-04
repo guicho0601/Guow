@@ -31,7 +31,7 @@
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="direction.png" translatesAutoresizingMaskIntoConstraints="NO" id="vD6-aR-VQq">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ic18.png" translatesAutoresizingMaskIntoConstraints="NO" id="vD6-aR-VQq">
                         <rect key="frame" x="6" y="9" width="30" height="30"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </imageView>
@@ -46,6 +46,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="direction.png" width="25" height="26"/>
+        <image name="ic18.png" width="50" height="50"/>
     </resources>
 </document>

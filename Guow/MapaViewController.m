@@ -14,10 +14,11 @@
 #import "FavoritosList.h"
 #import "BusquedaController.h"
 #import "TablaPromociones.h"
+#import "LicenciaController.h"
+#import "NosotrosController.h"
+#import "BrujulaController.h"
 
-#define COLOR_BASE [UIColor colorWithRed:254.0/255.0 green:194.0/255.0 blue:15.0/255.0 alpha:1.0];
-
-@interface MapaViewController () <servicioProtocol,categoriaProtocol,lugarProtocol,UIActionSheetDelegate,UIScrollViewDelegate,favoritosListProtocol,busquedaProtocol,PromocionesProtocol>{
+@interface MapaViewController () <servicioProtocol,categoriaProtocol,lugarProtocol,UIActionSheetDelegate,UIScrollViewDelegate,favoritosListProtocol,busquedaProtocol,PromocionesProtocol,LicenciaControllerProtocol,NosotrosControllerProtocol>{
     CategoriaList *listCategoria;
     LugarList *listLugar;
     ModelConnection *model;
@@ -33,6 +34,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *configButton;
 @property (weak, nonatomic) IBOutlet UINavigationItem *itemsNavegacion;
+@property (weak, nonatomic) IBOutlet UINavigationBar *navegadorBarra;
 
 
 @end
@@ -92,7 +94,7 @@
 -(void)ubicarbotones:(NSString*)titulo imagen:(NSString*)imgName horizontal:(float)x vertical:(float)y{
     UIImage *imagen;
     NSArray *stArray = [imgName componentsSeparatedByString:@"/"];
-    if (stArray.count == 1) imagen = [UIImage imageNamed:imgName];
+    if (stArray.count == 1) imagen = [UIImage imageNamed:[NSString stringWithFormat:@"%@%@",GRIS,imgName]];
     UIButton *btnDetail = [UIButton buttonWithType:UIButtonTypeCustom];
     btnDetail.frame = CGRectMake(x,y,imagen.size.width,imagen.size.height);
     [btnDetail addTarget:self action:@selector(abririnfo:) forControlEvents:UIControlEventTouchUpInside];
@@ -151,7 +153,7 @@
     [super viewDidLoad];
     model = [[ModelConnection alloc]init];
     self.view.backgroundColor = COLOR_BASE;
-    UIImage *image = [UIImage imageNamed:@"Mapa_Sample_50.jpg"];
+    UIImage *image = [UIImage imageNamed:@"Mapa.jpg"];
     [self.imageView setImage:image];
     [self.imageView sizeToFit];
     self.scrollView.delegate = self;
@@ -162,7 +164,13 @@
     //UIBarButtonItem *btnBookmark = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"bookmark.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(openBookMarks)];
     //[self.itemsNavegacion setRightBarButtonItems:[NSArray arrayWithObjects:self.configButton,btnBookmark, nil]];
     UIBarButtonItem *busquedaButton = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"lup.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(openSearch)];
+    [busquedaButton setTintColor:[UIColor whiteColor]];
     [self.itemsNavegacion setLeftBarButtonItems:[NSArray arrayWithObjects:self.MenuButton,busquedaButton, nil]];
+    
+    BrujulaController *brujula = [[BrujulaController alloc]init];
+    brujula.view.frame = CGRectMake(5, _navegadorBarra.frame.size.height+5, brujula.view.frame.size.width, brujula.view.frame.size.height);
+    [self.view addSubview:brujula.view];
+    [self.view bringSubviewToFront:brujula.view];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -181,6 +189,7 @@
     }
     [self cargarDatos];
     //[self centerScrollViewContents];
+    [self abrirContrato];
 }
 
 - (void)didReceiveMemoryWarning
@@ -356,6 +365,35 @@
     menuTouch = 4;
     idBusqueda = idlugar;
     [self cargarDatos];
+}
+
+-(void)abrirContrato{
+    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+    if (![def boolForKey:@"aceptado"]) {
+        LicenciaController *lic = [[LicenciaController alloc]init];
+        lic.modalPresentationStyle = UIModalPresentationFormSheet;
+        lic.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+        [lic setDelegate:self];
+        [self presentViewController:lic animated:YES completion:nil];
+    }
+}
+
+-(void)cerrarContrato{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(void)abrirAbout{
+    [_actionDelagate movePanelToOriginalPosition];
+    
+    NosotrosController *nos = [[NosotrosController alloc]init];
+    nos.modalPresentationStyle = UIModalPresentationFormSheet;
+    nos.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    [nos setDelegate:self];
+    [self presentViewController:nos animated:YES completion:nil];
+}
+
+-(void)cerrarAbout{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

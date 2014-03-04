@@ -19,7 +19,7 @@
         NSLog(@"Descargando...");
         [model descargarInfo:@"select * from servicio" Archivo:@"servicio"];
         [model descargarInfo:@"select * from categoria" Archivo:@"categoria"];
-        [model descargarInfo:@"select * from lugar" Archivo:@"lugar"];
+        [model descargarInfo:@"select * from lugar where habilitado=1" Archivo:@"lugar"];
         [model descargarInfo:@"select * from img_turismo" Archivo:@"imagenes"];
         NSLog(@"Terminando Descarga...");
     }
@@ -28,12 +28,33 @@
     [descarga iniciar_descarga];
 }
 
+-(void)ver_fuentes{
+    for (NSString* family in [UIFont familyNames])
+    {
+        NSLog(@"%@", family);
+        
+        for (NSString* name in [UIFont fontNamesForFamilyName: family])
+        {
+            NSLog(@"  %@", name);
+        }
+    }
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    //[self ver_fuentes];
+    
     //NSThread *myThread = [[NSThread alloc]initWithTarget:self selector:@selector(descargarInfo) object:nil];
     //[myThread start];
     [self descargarInfo];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [[UINavigationBar appearance] setBarTintColor:COLOR_BASE];
+    NSShadow *shadow = [[NSShadow alloc] init];
+    shadow.shadowColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.8];
+    shadow.shadowOffset = CGSizeMake(0, 1);
+    [[UINavigationBar appearance] setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys:
+                                                           [UIColor whiteColor], NSForegroundColorAttributeName,
+                                                           [UIFont fontWithName:FUENTE size:19.0], NSFontAttributeName, nil]];
     
     if (![defaults boolForKey:@"ValoresGuardados"])
     {
@@ -60,6 +81,7 @@
         [defaults registerDefaults:defaultValues];
 
     }
+    //[defaults setBool:NO forKey:@"aceptado"];
     [defaults setObject:@"Turismo.png" forKey:@"logoTurismo"];
     [defaults synchronize];
     return YES;

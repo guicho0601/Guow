@@ -14,12 +14,6 @@
 }
 @property (weak, nonatomic) IBOutlet UILabel *conoceTitulo;
 @property (weak, nonatomic) IBOutlet UITextView *conoceText;
-@property (weak, nonatomic) IBOutlet UILabel *ubicacionTitulo;
-@property (weak, nonatomic) IBOutlet UILabel *ubicacionText;
-@property (weak, nonatomic) IBOutlet UILabel *tarifaTitulo;
-@property (weak, nonatomic) IBOutlet UITextView *tarifaText;
-@property (weak, nonatomic) IBOutlet UILabel *informacionTitulo;
-@property (weak, nonatomic) IBOutlet UILabel *informacionText;
 
 @end
 
@@ -45,24 +39,33 @@
     esp = [dictionary objectForKey:@"desesp"];
     ing = [dictionary objectForKey:@"desing"];
     web = [dictionary objectForKey:@"web"];
+    [_conoceText setFont:[UIFont fontWithName:FUENTE size:11.5f]];
+    //[_conoceTitulo setFont:[UIFont fontWithName:FUENTE size:11.5f]];
     [self cambioIdioma];
 }
 
 -(void)cambioIdioma{
+    [_conoceText setScrollEnabled:YES];
     NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
     if ([def integerForKey:@"idioma"]==1) {
         _conoceTitulo.text = @"CONOCE MAS";
+        /*
         _ubicacionTitulo.text = @"UBICACION";
         _tarifaTitulo.text = @"TARIFAS DE ENTRADA";
         _informacionTitulo.text = @"MAS INFORMACION";
+         */
         _conoceText.text = esp;
     }else{
         _conoceTitulo.text = @"LEARN MORE";
+        /*
         _ubicacionTitulo.text = @"UBICATION";
         _tarifaTitulo.text = @"TICKET PRICE";
         _informacionTitulo.text = @"MORE INFO";
+         */
         _conoceText.text = ing;
     }
+    [_conoceText sizeToFit];
+    [_conoceText setScrollEnabled:NO];
 }
 
 @end

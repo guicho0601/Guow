@@ -62,7 +62,8 @@
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"f1.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(close)];
         self.navigationItem.leftBarButtonItem = backButton;
      //self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
+    [self.view setBackgroundColor:COLOR_BASE];
+    [self.tableView setBackgroundColor:COLOR_BASE];
 }
 
 -(void)viewDidAppear:(BOOL)animated{
@@ -103,8 +104,10 @@
         if (cell == nil) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         }
+        cell.textLabel.text = @"Promociones";
+        cell.textLabel.textColor = [UIColor whiteColor];
         cell.imageView.image = [UIImage imageNamed:@"f1.png"];
-        cell.backgroundColor = color_base;
+        cell.backgroundColor = COLOR_BASE;
         return cell;
     }else{
     
@@ -119,7 +122,7 @@
         if (indexPath.row == promociones.count) {
             [_delegate terminaCargaPromocion];
         }
-        cell.backgroundColor = color_base;
+        cell.backgroundColor = COLOR_BASE;
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
         return cell;
     }

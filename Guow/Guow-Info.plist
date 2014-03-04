@@ -24,6 +24,17 @@
 	<string>1.0</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>UIAppFonts</key>
+	<array>
+		<string>PTC55F.ttf</string>
+		<string>PTC75F.ttf</string>
+		<string>PTN57F.ttf</string>
+		<string>PTN77F.ttf</string>
+		<string>PTS55F.ttf</string>
+		<string>PTS56F.ttf</string>
+		<string>PTS75F.ttf</string>
+		<string>PTS76F.ttf</string>
+	</array>
 	<key>UIMainStoryboardFile</key>
 	<string>Main_iPhone</string>
 	<key>UIMainStoryboardFile~ipad</key>
@@ -40,6 +51,19 @@
 	<array>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>FacebookAppID</key>
+	<string>322714617838202</string>
+	<key>FacebookDisplayName</key>
+	<string>GuowMaps</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb322714617838202</string>
+			</array>
+		</dict>
 	</array>
 </dict>
 </plist>

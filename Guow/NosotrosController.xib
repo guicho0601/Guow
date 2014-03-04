@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="12F45" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NosotrosController">
+            <connections>
+                <outlet property="contenidoView" destination="FJ5-rO-ueE" id="x7d-xc-w5C"/>
+                <outlet property="tabBar" destination="WtO-t7-NF9" id="bo4-aG-USN"/>
+                <outlet property="view" destination="1" id="3"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="1">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g2G-UB-KAQ">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="qNe-XH-ETf"/>
+                    </constraints>
+                    <color key="barTintColor" red="0.99607843139999996" green="0.76078431369999999" blue="0.058823529409999999" alpha="1" colorSpace="calibratedRGB"/>
+                    <textAttributes key="titleTextAttributes">
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </textAttributes>
+                    <items>
+                        <navigationItem title="About Guow" id="hJo-hK-761">
+                            <barButtonItem key="leftBarButtonItem" image="ic22.png" id="4nm-K4-yAd">
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <action selector="backButtonAction:" destination="-1" id="0mf-m5-glq"/>
+                                </connections>
+                            </barButtonItem>
+                        </navigationItem>
+                    </items>
+                </navigationBar>
+                <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WtO-t7-NF9">
+                    <rect key="frame" x="0.0" y="44" width="320" height="49"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="49" id="bt3-C1-LNZ"/>
+                    </constraints>
+                    <items>
+                        <tabBarItem title="Guide" image="menu_close.png" id="eon-JV-JbZ"/>
+                        <tabBarItem tag="1" title="Credits" image="star.png" id="9YL-au-SfU"/>
+                    </items>
+                </tabBar>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FJ5-rO-ueE">
+                    <rect key="frame" x="0.0" y="93" width="320" height="475"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="WtO-t7-NF9" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="4tj-qc-vDQ"/>
+                <constraint firstAttribute="trailing" secondItem="WtO-t7-NF9" secondAttribute="trailing" id="5GR-43-pZ7"/>
+                <constraint firstItem="WtO-t7-NF9" firstAttribute="top" secondItem="g2G-UB-KAQ" secondAttribute="bottom" id="7zp-Wd-sHt"/>
+                <constraint firstAttribute="trailing" secondItem="g2G-UB-KAQ" secondAttribute="trailing" id="8k5-g7-bWY"/>
+                <constraint firstAttribute="trailing" secondItem="FJ5-rO-ueE" secondAttribute="trailing" id="EV0-WE-EX9"/>
+                <constraint firstItem="g2G-UB-KAQ" firstAttribute="top" secondItem="1" secondAttribute="top" id="EkP-Zj-RIc"/>
+                <constraint firstAttribute="bottom" secondItem="FJ5-rO-ueE" secondAttribute="bottom" id="FPP-Le-Bcx"/>
+                <constraint firstItem="FJ5-rO-ueE" firstAttribute="top" secondItem="WtO-t7-NF9" secondAttribute="bottom" id="m3d-sW-xp8"/>
+                <constraint firstItem="FJ5-rO-ueE" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="m3g-73-0pa"/>
+                <constraint firstItem="g2G-UB-KAQ" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="xFF-Yf-fTQ"/>
+            </constraints>
+            <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="ic22.png" width="50" height="50"/>
+        <image name="menu_close.png" width="24" height="15"/>
+        <image name="star.png" width="25" height="24"/>
+    </resources>
+</document>

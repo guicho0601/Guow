@@ -89,6 +89,14 @@
 -(void)viewWillAppear:(BOOL)animated{
     [self cargarDatos];
     [self establecerTitulo];
+    [self.navigationItem setHidesBackButton:YES];
+    UIBarButtonItem *but = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"ic22.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(backMenu)];
+    [but setTintColor:[UIColor whiteColor]];
+    [self.navigationItem setLeftBarButtonItem:but];
+}
+
+-(void)backMenu{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -120,49 +128,18 @@
     Categoria *aux = [categoriaArray objectAtIndex:indexPath.row];
     if ([model comprobarIdioma]== 1) cell.textLabel.text = aux.categoriaesp;
     else cell.textLabel.text = aux.categoriaing;
-    if(aux.icono != nil) cell.imageView.image = [UIImage imageNamed:aux.icono];
-
+    if(aux.icono != nil) cell.imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@%@",AMARILLO,aux.icono]];
+    cell.textLabel.text = [cell.textLabel.text uppercaseString];
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    cell.textLabel.font = [UIFont fontWithName:FUENTE size:12.0f];
+    [cell.imageView setContentMode:UIViewContentModeScaleAspectFit];
+    cell.textLabel.numberOfLines = 2;
     return cell;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 35;
 }
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 
 #pragma mark - Table view delegate

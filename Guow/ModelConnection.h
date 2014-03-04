@@ -15,5 +15,6 @@
 -(BOOL)comprobarActualizaciones;
 -(int)comprobarIdioma;
 -(UIImage*)buscarImagen:(NSString*)nombre;
+-(NSString*)getPathImagenes:(NSString*)nombre;
 
 @end

@@ -24,4 +24,11 @@
 @property(nonatomic) int posy;
 @property(nonatomic) int turismo;
 @property(nonatomic) int anuncio;
+@property(nonatomic,retain) NSString *horarioesp;
+@property(nonatomic,retain) NSString *horarioing;
+@property(nonatomic,retain) NSString *direccion;
+@property(nonatomic,retain) NSString *tarifaesp;
+@property(nonatomic,retain) NSString *tarifaing;
+@property(nonatomic) double latitud;
+@property(nonatomic) double longitud;
 @end

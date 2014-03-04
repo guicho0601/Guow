@@ -8,16 +8,20 @@
 
 #import "infoLugar.h"
 #import "tituloTableCell.h"
-#import "imageTableCell.h"
 #import "descripcionTableCell.h"
 #import "mapaTableCell.h"
 #import "ModelConnection.h"
 #import "imageZoom.h"
+#import "ubicacionTableCell.h"
+#import "tarifaTableCell.h"
+#import "webTableCell.h"
+#import "imageSlideTableCell.h"
+#import "lugarImagenesSlideController.h"
 #import <Social/Social.h>
+#import <MessageUI/MessageUI.h>
+#import <FacebookSDK/FacebookSDK.h>
 
-#define COLOR_BASE [UIColor colorWithRed:254.0/255.0 green:194.0/255.0 blue:15.0/255.0 alpha:1.0];
-
-@interface infoLugar ()<UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,imageTableCellProtocol,imageZoomProtocol,imageZoomProtocol,tituloTableCellProtocol>{
+@interface infoLugar ()<UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,imageSlideTableCellProtocol,imageZoomProtocol,imageZoomProtocol,tituloTableCellProtocol,lugarImagenesSlideControllerProtocol,MFMailComposeViewControllerDelegate>{
     MapaViewController *viewMap;
     NSString *idLugar;
     NSString *desing,*desesp;
@@ -27,7 +31,9 @@
     tituloTableCell *CellTitulos;
     descripcionTableCell *CellDescripcion;
     mapaTableCell *CellMapa;
-    imageTableCell *CellImage;
+    ubicacionTableCell *CellUbicacion;
+    tarifaTableCell *CellTarifa;
+    webTableCell *CellWeb;
 }
 
 @property (weak, nonatomic) IBOutlet UINavigationBar *navigationBarra;
@@ -49,19 +55,25 @@
         if ([[dict objectForKey:@"idlugar"]isEqualToString:idLugar]) {
             titulos = [[NSDictionary alloc]initWithObjectsAndKeys:
                        [dict objectForKey:@"nombre"],@"nombre",
-                       @"",@"horario",
-                       @"",@"horarioing",
                        [dict objectForKey:@"logo"],@"logo",
                        [dict objectForKey:@"idlugar"],@"id",
-                       [dict objectForKey:@"imgesp"],@"imagen",
+                       [dict objectForKey:@"horario_esp"],@"horarioesp",
+                       [dict objectForKey:@"horario_ing"],@"horarioing",
+                       [dict objectForKey:@"servicio"],@"servicio",
                        nil];
             descripcion = [[NSDictionary alloc]initWithObjectsAndKeys:
                            [dict objectForKey:@"desing"],@"desing",
                            [dict objectForKey:@"desesp"],@"desesp",
                            [dict objectForKey:@"web"],@"web",
+                           [dict objectForKey:@"direccion"],@"direccion",
+                           [dict objectForKey:@"tarifa_esp"],@"tarifaesp",
+                           [dict objectForKey:@"tarifa_ing"],@"tarifaing",
                            nil];
-           
-            [listadoImagenes addObject:[dict objectForKey:@"imgesp"]];
+            mapa = [[NSDictionary alloc]initWithObjectsAndKeys:
+                    [dict objectForKey:@"latitud"],@"latitud",
+                    [dict objectForKey:@"longitud"],@"longitud",
+                    nil];
+            //[listadoImagenes addObject:[dict objectForKey:@"imgesp"]];
         }
     }
     adat = [model consulta:@"imagenes"];
@@ -84,6 +96,7 @@
         }
     }
     [_tableView reloadData];
+    _barraTitulo.title = [titulos objectForKey:@"nombre"];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -104,6 +117,7 @@
     self.buttonBarConfig.tintColor = [UIColor whiteColor];
     [self.tableView setDelegate:self];
     [self.tableView setDataSource:self];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -113,7 +127,7 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 4;
+    return 7;
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -135,17 +149,16 @@
     
     switch (indexPath.row) {
         case 0:{
-            imageTableCell *cell = [[imageTableCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-            cell = (imageTableCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+            imageSlideTableCell *cell = [[imageSlideTableCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+            cell = (imageSlideTableCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
             if (cell == nil)
             {
-                NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"imageTableCell" owner:self options:nil];
+                NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"imageSlideTableCell" owner:self options:nil];
                 cell = [nib objectAtIndex:0];
             }
             [cell setDelegate:self];
             [cell imagenes:listadoImagenes];
             [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-            CellImage = cell;
             return cell;
             break;
         }
@@ -178,6 +191,48 @@
             break;
         }
         case 3:{
+            ubicacionTableCell *cell = [[ubicacionTableCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+            cell = (ubicacionTableCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+            if (cell == nil)
+            {
+                NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"ubicacionTableCell" owner:self options:nil];
+                cell = [nib objectAtIndex:0];
+            }
+            [cell setData:descripcion];
+            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+            CellUbicacion = cell;
+            return cell;
+            break;
+        }
+        case 4:{
+            tarifaTableCell *cell = [[tarifaTableCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+            cell = (tarifaTableCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+            if (cell == nil)
+            {
+                NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"tarifaTableCell" owner:self options:nil];
+                cell = [nib objectAtIndex:0];
+            }
+            [cell setData:descripcion];
+            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+            CellTarifa = cell;
+            return cell;
+            break;
+        }
+        case 5:{
+            webTableCell *cell = [[webTableCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+            cell = (webTableCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+            if (cell == nil)
+            {
+                NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"webTableCell" owner:self options:nil];
+                cell = [nib objectAtIndex:0];
+            }
+            [cell setData:descripcion];
+            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+            CellWeb = cell;
+            return cell;
+            break;
+        }
+        case 6:{
             mapaTableCell *cell = [[mapaTableCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
             cell = (mapaTableCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
             if (cell == nil)
@@ -186,6 +241,7 @@
                 cell = [nib objectAtIndex:0];
             }
             [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+            [cell valores:mapa];
             CellMapa = cell;
             return cell;
             break;
@@ -199,6 +255,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    /*
     switch (indexPath.row) {
         case 0:
             return 207;
@@ -220,6 +277,9 @@
             return 44;
             break;
     }
+     */
+    UITableViewCell *cell = [self tableView:tableView cellForRowAtIndexPath:indexPath];
+    return cell.frame.size.height;
 }
 
 -(void)reciveMapView:(MapaViewController *)map{
@@ -266,15 +326,24 @@
     [defaults synchronize];
     [CellTitulos cambiarIdioma];
     [CellDescripcion cambioIdioma];
+    [CellTarifa cambiarIdioma];
 }
 
 -(void)abrirImagenSeleccionada:(NSString *)imagen{
+    /*
     imageZoom *zooming = [[imageZoom alloc]init];
     zooming.modalPresentationStyle = UIModalPresentationFormSheet;
     zooming.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     [zooming setDelegate:self];
     [zooming envioImagen:[listadoImagenes objectAtIndex:[imagen intValue]]];
     [self presentViewController:zooming animated:YES completion:nil];
+     */
+    lugarImagenesSlideController *lug = [[lugarImagenesSlideController alloc]initWithNibName:@"lugarImageSlideController" bundle:nil];
+    [lug setModalPresentationStyle:UIModalPresentationFormSheet];
+    [lug setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
+    [lug setDelegate:self];
+    [lug setImagenesArray:listadoImagenes];
+    [self presentViewController:lug animated:YES completion:nil];
 }
 
 -(void)exitModal{
@@ -282,6 +351,8 @@
 }
 
 -(void)facebookOpen{
+    NSLog(@"Facebook Open");
+    /*
     if([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
         
         SLComposeViewController *controller = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
@@ -293,9 +364,53 @@
         [self presentViewController:controller animated:YES completion:Nil];
         
     }
+     */
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                   @"Sharing Tutorial", @"name",
+                                   @"Build great social apps and get more installs.", @"caption",
+                                   @"Allow your users to share stories on Facebook from your app using the iOS SDK.", @"description",
+                                   @"https://developers.facebook.com/docs/ios/share/", @"link",
+                                   [listadoImagenes objectAtIndex:0], @"picture",
+                                   nil];
+    
+    // Show the feed dialog
+    [FBWebDialogs presentFeedDialogModallyWithSession:nil
+                                           parameters:params
+                                              handler:^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
+                                                  if (error) {
+                                                      NSLog(@"Error publishing story: %@", error.description);
+                                                  } else {
+                                                      if (result == FBWebDialogResultDialogNotCompleted) {
+                                                          NSLog(@"User cancelled.");
+                                                      } else {
+                                                          NSDictionary *urlParams = [self parseURLParams:[resultURL query]];
+                                                          
+                                                          if (![urlParams valueForKey:@"post_id"]) {
+                                                              NSLog(@"User cancelled.");
+                                                              
+                                                          } else {
+                                                              NSString *result = [NSString stringWithFormat: @"Posted story, id: %@", [urlParams valueForKey:@"post_id"]];
+                                                              NSLog(@"result %@", result);
+                                                          }
+                                                      }
+                                                  }
+                                              }];
+}
+
+- (NSDictionary*)parseURLParams:(NSString *)query {
+    NSArray *pairs = [query componentsSeparatedByString:@"&"];
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    for (NSString *pair in pairs) {
+        NSArray *kv = [pair componentsSeparatedByString:@"="];
+        NSString *val =
+        [kv[1] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        params[kv[0]] = val;
+    }
+    return params;
 }
 
 -(void)twitterOpen{
+    NSLog(@"Twitter Open");
     if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter])
     {
         SLComposeViewController *tweetSheet = [SLComposeViewController
@@ -304,6 +419,81 @@
         [tweetSheet addImage:[model buscarImagen:[listadoImagenes objectAtIndex:0]]];
         [self presentViewController:tweetSheet animated:YES completion:nil];
     }
+}
+
+-(void)mailOpen{
+    NSLog(@"Email Open");
+    NSString *emailTitle = @"Great Photo and Doc";
+    NSString *messageBody = @"Hey, check this out!";
+    NSArray *toRecipents = [NSArray arrayWithObject:@"support@appcoda.com"];
+    
+    MFMailComposeViewController *mc = [[MFMailComposeViewController alloc] init];
+    mc.mailComposeDelegate = self;
+    [mc setSubject:emailTitle];
+    [mc setMessageBody:messageBody isHTML:NO];
+    [mc setToRecipients:toRecipents];
+    
+    for (NSString *s in listadoImagenes) {
+        NSString *img = [model getPathImagenes:s];
+    
+        // Determine the file name and extension
+        NSArray *filepart = [img componentsSeparatedByString:@"/"];
+        NSString *filename = [filepart objectAtIndex:filepart.count-1];
+    
+        filepart = [filename componentsSeparatedByString:@"."];
+        filename = [filepart objectAtIndex:filepart.count-2];
+        NSString *extension = [filepart objectAtIndex:filepart.count-1];
+    
+        NSData *fileData = [NSData dataWithContentsOfFile:img];
+    
+        NSString *mimeType;
+        if ([extension isEqualToString:@"jpg"]) {
+            mimeType = @"image/jpeg";
+        } else if ([extension isEqualToString:@"png"]) {
+            mimeType = @"image/png";
+        } else if ([extension isEqualToString:@"doc"]) {
+            mimeType = @"application/msword";
+        } else if ([extension isEqualToString:@"ppt"]) {
+            mimeType = @"application/vnd.ms-powerpoint";
+        } else if ([extension isEqualToString:@"html"]) {
+            mimeType = @"text/html";
+        } else if ([extension isEqualToString:@"pdf"]) {
+            mimeType = @"application/pdf";
+        }
+    
+        [mc addAttachmentData:fileData mimeType:mimeType fileName:filename];
+    }
+    // Present mail view controller on screen
+    [self presentViewController:mc animated:YES completion:NULL];
+    
+}
+
+- (void) mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+{
+    switch (result)
+    {
+        case MFMailComposeResultCancelled:
+            NSLog(@"Mail cancelled");
+            break;
+        case MFMailComposeResultSaved:
+            NSLog(@"Mail saved");
+            break;
+        case MFMailComposeResultSent:
+            NSLog(@"Mail sent");
+            break;
+        case MFMailComposeResultFailed:
+            NSLog(@"Mail sent failure: %@", [error localizedDescription]);
+            break;
+        default:
+            break;
+    }
+    
+    // Close the Mail Interface
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
+
+-(void)cerrarSlideImages{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

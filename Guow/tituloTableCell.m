@@ -8,10 +8,11 @@
 
 #import "tituloTableCell.h"
 #import "ModelConnection.h"
-#define COLOR_BASE [UIColor colorWithRed:254.0/255.0 green:194.0/255.0 blue:15.0/255.0 alpha:1.0];
 
 @interface tituloTableCell(){
     NSString *idLugar;
+    NSString *horarioesp,*horarioing;
+    ModelConnection *model;
 }
 @property (weak, nonatomic) IBOutlet UIImageView *logoImage;
 @property (weak, nonatomic) IBOutlet UILabel *nombreLabel;
@@ -49,9 +50,19 @@
     [_delegate twitterOpen];
 }
 
+- (IBAction)emailButton:(id)sender {
+    [_delegate mailOpen];
+}
+
 -(void)nombre:(NSDictionary *)dictionary{
+    horarioesp = [dictionary objectForKey:@"horarioesp"];
+    horarioing = [dictionary objectForKey:@"horarioing"];
     _nombreLabel.text = [dictionary objectForKey:@"nombre"];
-    _logoImage.image = [UIImage imageNamed:[dictionary objectForKey:@"logo"]];
+    if ([[dictionary objectForKey:@"servicio"]isEqualToString:@"1"]) {
+        _logoImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@%@",AMARILLO,[dictionary objectForKey:@"logo"]]];
+    }else{
+        _logoImage.image = [model buscarImagen:[dictionary objectForKey:@"logo"]];
+    }
     _bookMarkButton.tintColor = COLOR_BASE;
     [self cambiarIdioma];
     idLugar = [dictionary objectForKey:@"id"];
@@ -74,14 +85,20 @@
     if ([def integerForKey:@"idioma"]==1) {
         _horarioTitulo.text = @"HORARIO";
         _comparteTitulo.text = @"COMPARTE";
+        _horarioText.text = horarioesp;
     }else{
         _horarioTitulo.text = @"SCHEDULE";
         _comparteTitulo.text = @"SHARED";
+        _horarioText.text = horarioing;
     }
+    [_nombreLabel setFont:[UIFont fontWithName:FUENTE size:16.0f]];
+    [_horarioText setFont:[UIFont fontWithName:FUENTE size:11.5f]];
+    [_horarioTitulo setFont:[UIFont fontWithName:FUENTE size:11.5f]];
+    [_comparteTitulo setFont:[UIFont fontWithName:FUENTE size:11.5f]];
 }
 
 - (IBAction)bookmarkButtonAction:(id)sender {
-    ModelConnection *model = [[ModelConnection alloc]init];
+    model = [[ModelConnection alloc]init];
     UIBarButtonItem *button = sender;
     NSString *mensaje,*titulo;
     NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
